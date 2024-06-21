@@ -33,7 +33,7 @@ class Obra extends BaseController
         echo view('obra/index',['listaObras'=>$obras,'listaEditoras'=>$editoras]);
         echo view('_partials/footer');
     }
-    public function salvar(){
+    public function cadastrar(){
         $this->obraModel->save($this->request->getPost());
         return redirect()->to('Obra/index');
     }

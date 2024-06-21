@@ -7,7 +7,7 @@
             <label for="data_inicio">Data de Inicio:</label>
         </div>
         <div class="col-10">
-            <input value='<?=$emprestimo['data_inicio']?>'class='form-control' type="text" id='data_inicio' name='data_inicio'>
+            <input value='<?=$emprestimo['data_inicio']?>'class='form-control' type="date" id='data_inicio' name='data_inicio'>
         </div>
     </div>
     <div class="row p-2">
@@ -15,7 +15,7 @@
             <label for="data_fim">Data do Fim:</label>
         </div>
         <div class="col-10">
-            <input value='<?=$emprestimo['data_fim']?>'class='form-control' type="text" id='data_fim' name='data_fim'>
+            <input value='<?=$emprestimo['data_fim']?>'class='form-control' type="date" id='data_fim' name='data_fim'>
         </div>
     </div>
     <div class="row p-2">

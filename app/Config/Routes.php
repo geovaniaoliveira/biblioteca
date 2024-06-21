@@ -5,5 +5,5 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Usuario::index');
+$routes->get('/', 'Login::index');
 $routes->setAutoRoute(true);
