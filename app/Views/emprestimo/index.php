@@ -1,12 +1,9 @@
 <div class="container">
     <h2>Emprestimo</h2>
         <!-- Button do Modal -->
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Novo
         </button>
-        <?php foreach($listaEmprestimo as $em) :?>
-        <?=anchor("Emprestimo/devolucao/".$em['id'],"Devolução",['class' => 'btn  btn-dark'])?>
-        <?php endforeach ?>
         <!-- Tabela de Usuario -->
     <table class="table">
         <thead>
@@ -22,22 +19,38 @@
         </thead>
         <tbody>
             <?php foreach($listaEmprestimo as $em) :?>
-               <tr>
-                <?php
-                $data_inicio = $em['data_inicio'];
-                $data_inicio = explode('-', $data_inicio);
-                $data_inicio = mktime(0,0,0, $data_inicio[1], $data_inicio[2], $data_inicio[0]);
-                $data_fim = $em['$data_fim'];
-                $data_fim = explode('-', $data_fim);
-                $data_fim = mktime(0,0,0, $data_fim[1], $data_fim[2], $data_fim[0]);
-                $prazo = $em['data_prazo']*24*60*60;
-                $prazo +=  $data_inicio;
-                if($data_fim - $prazo <= 0){
-                    echo '<p class="text-success">Dentro do prazo</p>';
-                } else {
-                    echo '<p class="text-danger">Fora do prazo</p>';
-                }
-                ?>
+                <tr>
+                    <td>
+                        <?=$em['id']?>
+                    </td>
+                    <td>
+                    <?php
+                        $data_inicio = $em['data_inicio'];
+                        $data_inicio = explode('-',$data_inicio);
+                        $data_inicio = mktime(0,0,0,$data_inicio[1],$data_inicio[2],$data_inicio[0]);
+                        $prazo = $em['data_prazo']*24*60*60;
+                        $prazo += $data_inicio;
+                    ?>
+                    <?=anchor("Emprestimo/editar/".$em['id'],date('d/m/Y',$data_inicio),$em['data_inicio'])?>
+                    </td>
+                    <td>
+                    <?php
+                    if($em['data_fim'] != NULL){
+                        $data_fim = $em['data_fim'];
+                        $data_fim = explode('-',$data_fim);
+                        $data_fim = mktime(0,0,0,$data_fim[1],$data_fim[2],$data_fim[0]);
+                    }
+                    ?>
+                        <?php
+                    if($em['data_fim'] != NULL){
+                        echo date('d/m/Y',$data_fim);
+                    }
+                    ?>
+                    </td>
+                    <td>
+                        <?=date('d/m/Y',$prazo)?>
+                    </td>
+                    <td>
                     <?php
                         foreach($listaObra as $obra){
                             $obras[$obra['id']] = $obra['titulo'];
@@ -63,6 +76,19 @@
                         }
                         ?>
                         <?=$usuarios[$em['id_usuario']]?>
+                    </td>
+                    <td>
+                        <?php if($em['data_fim'] != NULL):?>
+                            <?php if($data_fim - $prazo <= 0){
+                                echo "Devolução no prazo";
+                            }else{
+                                echo "Devolução fora do prazo";
+                            }
+                            ?>
+                        <?php endif?>
+                        <?php if($em['data_fim'] == NULL):?>
+                            <?=anchor("Emprestimo/devolucao/".$em['id'],"Devolução",['class' => 'btn  btn-primary'])?>
+                        <?php endif?>
                     </td>
                 </tr>
             <?php endforeach ?>  
@@ -122,8 +148,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-dark">Cadastrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
             </div>
         </div>
     </div>
